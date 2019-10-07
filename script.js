@@ -60,10 +60,23 @@ function loop(currentTime) {
     if (x+size >= width || x-size <= 0) {
         x = Math.min(Math.max(x, size), width-size);
         dx *= -1;
+        dr = (2*size*dr - 5*(dy - 0)) / (7 * size);
     }
     if (y+size >= height || y-size <= 0) {
         y = Math.min(Math.max(y, size), height-size);
         dy *= -1;
+    }
+
+    if (y+size >= height) {
+        dr = (2*size*dr - 5*(0 - dx)) / (7 * size);
+    } else if (y-size <= 0) {
+        dr = (2*size*dr - 5*(dx - 0)) / (7 * size);
+    }
+
+    if (x+size >= width) {
+        dr = (2*size*dr - 5*(dy - 0)) / (7 * size);
+    } else if (x-size <= 0) {
+        dr = (2*size*dr - 5*(0 - dy)) / (7 * size);
     }
 
     update(dt / 1000);
