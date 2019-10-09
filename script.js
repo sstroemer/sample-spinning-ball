@@ -26,7 +26,7 @@ var dr = 0;
 var size = 10
 var mass = 10;
 var spinCoef = 0.001;
-var friction = 0.001;
+var friction = 0;
 var gravity = 0;
 
 // canvas size
@@ -57,26 +57,35 @@ function loop(currentTime) {
     dt = currentTime - lastTime
     lastTime = currentTime;
 
-    if (x+size >= width || x-size <= 0) {
-        x = Math.min(Math.max(x, size), width-size);
-        dx *= -1;
-        dr = (2*size*dr - 5*(dy - 0)) / (7 * size);
-    }
-    if (y+size >= height || y-size <= 0) {
-        y = Math.min(Math.max(y, size), height-size);
-        dy *= -1;
-    }
 
+    // constrain ball into area
+    x = Math.min(Math.max(x, size), width-size);
+    y = Math.min(Math.max(y, size), height-size);
+
+    // coefficient of restitution \in [0,1]
+    let e = 0.9;
+
+    // be careful. our rotation (right now CW pos) is mirrored to the theoretical onee (CCW pos)
+    // our y coordinate is top centered (theory is bottom - z - centered)
+
+    // handle all possible collisions here
     if (y+size >= height) {
-        dr = (2*size*dr - 5*(0 - dx)) / (7 * size);
+        dr = -(2*size*(-dr) - 5*(dx - 0)) / (7 * size);
+        dx = (-2*size*(-dr) + 5*dx + 2*0) / 7;
+        dy = -(-e*(-dy) + (1+e) * 0);
     } else if (y-size <= 0) {
-        dr = (2*size*dr - 5*(dx - 0)) / (7 * size);
+        dr = -(2*size*(-dr) - 5*((-dx) - 0)) / (7 * size);
+        dx = -(-2*size*(-dr) + 5*(-dx) + 2*0) / 7;
+        dy = (-e*(dy) + (1+e) * 0);
     }
-
     if (x+size >= width) {
-        dr = (2*size*dr - 5*(dy - 0)) / (7 * size);
+        dr = -(2*size*(-dr) - 5*((-dy) - 0)) / (7 * size);
+        dy = -(-2*size*(-dr) + 5*(-dy) + 2*0) / 7;
+        dx = -(-e*(-dx) + (1+e) * 0);
     } else if (x-size <= 0) {
-        dr = (2*size*dr - 5*(0 - dy)) / (7 * size);
+        dr = -(2*size*(-dr) - 5*(dy - 0)) / (7 * size);
+        dy = (-2*size*(-dr) + 5*dy + 2*0) / 7;
+        dx = (-e*dx + (1+e) * 0);
     }
 
     update(dt / 1000);
