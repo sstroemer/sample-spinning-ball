@@ -1,0 +1,23 @@
+<style>
+    button, #statsDisplay {
+        display: block;
+        margin: 1% auto;
+        width: 25%;
+        text-align: center;
+    }
+    canvas {
+        display: block;
+        margin: 1% auto;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+</style>
+
+<button type="button" onclick="spawn();">Spawn new ball!</button>
+<button type="button" onclick="gravity = (gravity == 0) ? 10 : 0;">Toggle gravity!</button>
+
+<canvas></canvas>
+
+<div id="statsDisplay">asd</div>
+
+<script src="script2.js"></script>
+

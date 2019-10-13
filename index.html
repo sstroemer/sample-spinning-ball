@@ -1,23 +1,98 @@
-<style>
-    button, #statsDisplay {
-        display: block;
-        margin: 1% auto;
-        width: 25%;
-        text-align: center;
-    }
-    canvas {
-        display: block;
-        margin: 1% auto;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-<button type="button" onclick="spawn();">Spawn new ball!</button>
-<button type="button" onclick="gravity = (gravity == 0) ? 10 : 0;">Toggle gravity!</button>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-<canvas></canvas>
+    <style>
+        button {
+            display: block;
+            margin: 1% auto;
+            width: 25%;
+            text-align: center;
+        }
+        canvas {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+        }
+        .btn-block {
+            width: 100%;
+        }
+    </style>
+</head>
 
-<div id="statsDisplay">asd</div>
+<body>
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <a class="waves-effect waves-light btn btn-block" id="btn_spawn" onclick="spawn();">SPAWN NEW BALL</a>
+            </div>
+        </div>
 
-<script src="script2.js"></script>
+        <div class="row">
+            <div class="col s12">
+                <canvas></canvas>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col s6">
+                <div class="switch">
+                    GRAVITY:<br>
+                    <label>
+                        OFF
+                        <input type="checkbox" id="switch_gravity">
+                        <span class="lever"></span>
+                        ON
+                    </label>
+                </div>
+            </div>
+            <div class="col s6 range-field">
+                <label>
+                    SIZE
+                    <input type="range" min="1" max="25" onchange="updateSize(this.value)" />
+                </label>
+            </div>
+        </div>
+        <div class="divider"></div><br>
+        <div class="row">
+            <div class="col s6">
+                <div class="switch">
+                    DRAG:<br>
+                    <label>
+                        OFF
+                        <input type="checkbox" id="switch_drag">
+                        <span class="lever"></span>
+                        ON
+                    </label>
+                </div>
+            </div>
+            <div class="col s6 range-field">
+                <label>
+                    MASS
+                    <input type="range" min="1" max="100" onchange="updateMass(this.value)" />
+                </label>
+            </div>
+        </div>
+        <div class="divider"></div><br>
+        <div class="switch">
+            MAGNUS EFFECT:<br>
+            <label>
+                OFF
+                <input type="checkbox" id="switch_magnus">
+                <span class="lever"></span>
+                ON
+            </label>
+        </div>
+        <br><div class="divider"></div><br>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="script.js"></script>
+
+<script>
+    function updateSize(val) { size = val; }
+    function updateMass(val) { mass = val; }
+</script>
